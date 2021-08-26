@@ -2,8 +2,10 @@ import Player from "./Player";
 
 export default class Game {
   private _canvas: HTMLCanvasElement;
-  context: CanvasRenderingContext2D;
-  player: Player;
+  private _context: CanvasRenderingContext2D;
+  private _player: Player;
+  private _gameIntervalId: number;
+  private _score: number;
   constructor(
     screenWidth: number,
     screenHeight: number,
@@ -12,10 +14,27 @@ export default class Game {
     this._canvas = canvas;
     this._canvas.width = screenWidth;
     this._canvas.height = screenHeight;
-    this.context = canvas.getContext("2d");
-    this.player = new Player(this.context, screenWidth / 2, screenHeight - 25);
+    this._context = canvas.getContext("2d");
   }
   start() {
-    this.player.draw();
+    this._player = new Player(
+      this._context,
+      this._canvas.width / 2,
+      this._canvas.height - 25,
+      4
+    );
+    this.updateScore(0);
   }
+  updateScore(newScore: number) {
+    const element = document.querySelector(".score") as HTMLElement;
+
+    if (newScore - this._score > 0) {
+      element.classList.add("highlight");
+      setTimeout(() => element.classList.remove("highlight"), 100);
+    }
+
+    this._score = newScore;
+    element.innerText = "Score: " + this._score.toFixed(1);
+  }
+  Loop() {}
 }
