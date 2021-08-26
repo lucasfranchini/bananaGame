@@ -18,6 +18,7 @@ export default class Game {
   }
   start() {
     this._player = new Player(
+      this._canvas,
       this._context,
       this._canvas.width / 2,
       this._canvas.height - 25,
@@ -39,7 +40,7 @@ export default class Game {
     element.innerText = "Score: " + this._score.toFixed(1);
   }
   loop() {
-    this._player.move();
+    this._player.updateState();
     this.renderGame();
   }
   renderGame() {

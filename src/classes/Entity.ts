@@ -1,12 +1,14 @@
-export default class Entity {
+export default abstract class Entity {
+  protected _canvas: HTMLCanvasElement;
   private context: CanvasRenderingContext2D;
-  private x: number;
-  private y: number;
-  private img: HTMLImageElement;
-  private _speedX: number;
-  private _speedY: number;
-
+  protected _x: number;
+  protected _y: number;
+  protected _img: HTMLImageElement;
+  protected _speedX: number;
+  protected _speedY: number;
+  abstract updateState(): void;
   constructor(
+    canvas: HTMLCanvasElement,
     context: CanvasRenderingContext2D,
     initialX: number,
     initialY: number,
@@ -15,30 +17,27 @@ export default class Entity {
     height: number
   ) {
     this.context = context;
-    this.x = initialX;
-    this.y = initialY;
+    this._x = initialX;
+    this._y = initialY;
     this._speedX = 0;
     this._speedY = 0;
-    this.img = new Image(width, height);
-    this.img.src = imageURL;
+    this._img = new Image(width, height);
+    this._img.src = imageURL;
+    this._canvas = canvas;
   }
   draw() {
-    const imgWidth = this.img.width;
-    const imgHeight = this.img.height;
+    const imgWidth = this._img.width;
+    const imgHeight = this._img.height;
     this.context.drawImage(
-      this.img,
-      this.x - imgWidth,
-      this.y - imgHeight,
+      this._img,
+      this._x - imgWidth,
+      this._y - imgHeight,
       imgWidth,
       imgHeight
     );
   }
   move() {
-    this.x += this._speedX;
-    this.y += this._speedY;
-  }
-
-  set SpeedX(newSpeed: number) {
-    this._speedX = newSpeed;
+    this._x += this._speedX;
+    this._y += this._speedY;
   }
 }
