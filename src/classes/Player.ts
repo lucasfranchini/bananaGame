@@ -14,6 +14,8 @@ export default class Player extends Entity {
     super(canvas, context, initialX, initialY, "/assets/alien.png", 64, 97);
     this._maxLife = initialLife;
     this._actualLife = initialLife;
+    this._x -= 64;
+    this._y -= 97;
   }
   updateState() {
     this.move();
@@ -35,11 +37,21 @@ export default class Player extends Entity {
     }
   }
   stopOnEdge() {
-    if (this._x - this._img.width < 0) {
-      this._x = 0 + this._img.width;
+    if (this._x < 0) {
+      this._x = 0;
     }
-    if (this._x > this._canvas.width) {
-      this._x = this._canvas.width;
+    if (this._x + this._img.width > this._canvas.width) {
+      this._x = this._canvas.width - this._img.width;
     }
+  }
+  checkColision(entity: Entity) {
+    const playerCoordinates = {
+      y: [this._y, this._y + this._img.height],
+      x: [this._x, this._x + this._img.width],
+    };
+    const entityCoordinates = {
+      y: [entity.y, entity.y + entity.img.height],
+      x: [entity.x, entity.x + entity.img.width],
+    };
   }
 }

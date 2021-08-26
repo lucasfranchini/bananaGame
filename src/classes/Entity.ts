@@ -30,16 +30,19 @@ export default abstract class Entity {
   draw() {
     const imgWidth = this._img.width;
     const imgHeight = this._img.height;
-    this.context.drawImage(
-      this._img,
-      this._x - imgWidth,
-      this._y - imgHeight,
-      imgWidth,
-      imgHeight
-    );
+    this.context.drawImage(this._img, this._x, this._y, imgWidth, imgHeight);
   }
   move() {
     this._x += this._speedX;
     this._y += this._speedY;
+  }
+  get y() {
+    return this._y;
+  }
+  get x() {
+    return this._x;
+  }
+  get img() {
+    return this._img;
   }
 }
