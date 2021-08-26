@@ -9,3 +9,12 @@ body {
   width: 100%;
   background-color: #000;
 }
+
+.ground {
+  position: fixed;
+  bottom: 50px;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  background-color: #fff;
+}
