@@ -27,7 +27,10 @@ export default class Player extends Entity {
     }
   }
   endMove(event: KeyboardEvent) {
-    if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
+    if (event.key === "ArrowRight" && this._speedX === 5) {
+      this._speedX = 0;
+    }
+    if (event.key === "ArrowLeft" && this._speedX === -5) {
       this._speedX = 0;
     }
   }
