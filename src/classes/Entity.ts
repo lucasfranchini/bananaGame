@@ -1,8 +1,10 @@
 export default class Entity {
-  context: CanvasRenderingContext2D;
-  x: number;
-  y: number;
-  img: HTMLImageElement;
+  private context: CanvasRenderingContext2D;
+  private x: number;
+  private y: number;
+  private img: HTMLImageElement;
+  private _speedX: number;
+  private _speedY: number;
 
   constructor(
     context: CanvasRenderingContext2D,
@@ -15,6 +17,8 @@ export default class Entity {
     this.context = context;
     this.x = initialX;
     this.y = initialY;
+    this._speedX = 0;
+    this._speedY = 0;
     this.img = new Image(width, height);
     this.img.src = imageURL;
   }
@@ -28,5 +32,13 @@ export default class Entity {
       imgWidth,
       imgHeight
     );
+  }
+  move() {
+    this.x += this._speedX;
+    this.y += this._speedY;
+  }
+
+  set SpeedX(newSpeed: number) {
+    this._speedX = newSpeed;
   }
 }

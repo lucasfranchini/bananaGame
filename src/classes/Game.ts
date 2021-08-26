@@ -24,6 +24,8 @@ export default class Game {
       4
     );
     this.updateScore(0);
+    clearInterval(this._gameIntervalId);
+    this._gameIntervalId = window.setInterval(() => this.loop(), 1000 / 60);
   }
   updateScore(newScore: number) {
     const element = document.querySelector(".score") as HTMLElement;
@@ -36,5 +38,21 @@ export default class Game {
     this._score = newScore;
     element.innerText = "Score: " + this._score.toFixed(1);
   }
-  Loop() {}
+  loop() {
+    this._player.move();
+    this.renderGame();
+  }
+  renderGame() {
+    this.clearScreen();
+    this._player.draw();
+  }
+  clearScreen() {
+    this._context.clearRect(0, 0, this._canvas.width, this._canvas.height);
+  }
+  onKeyDown(event: KeyboardEvent) {
+    this._player.startMove(event);
+  }
+  onKeyUp(event: KeyboardEvent) {
+    this._player.endMove(event);
+  }
 }
