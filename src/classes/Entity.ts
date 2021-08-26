@@ -1,3 +1,5 @@
+import Game from "./Game";
+
 export default abstract class Entity {
   protected _canvas: HTMLCanvasElement;
   private context: CanvasRenderingContext2D;
@@ -6,7 +8,7 @@ export default abstract class Entity {
   protected _img: HTMLImageElement;
   protected _speedX: number;
   protected _speedY: number;
-  abstract updateState(): void;
+  abstract updateState(game: Game): void;
   constructor(
     canvas: HTMLCanvasElement,
     context: CanvasRenderingContext2D,

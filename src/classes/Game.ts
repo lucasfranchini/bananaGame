@@ -1,3 +1,5 @@
+import Dropable from "../interfaces/Dropables";
+import Fruit from "./Fruit";
 import Player from "./Player";
 
 export default class Game {
@@ -5,7 +7,9 @@ export default class Game {
   private _context: CanvasRenderingContext2D;
   private _player: Player;
   private _gameIntervalId: number;
+  private _dropableIntervalId: number;
   private _score: number;
+  private _dropables: Dropable[];
   constructor(
     screenWidth: number,
     screenHeight: number,
@@ -24,9 +28,15 @@ export default class Game {
       this._canvas.height - 25,
       4
     );
+    this._dropables = [];
     this.updateScore(0);
     clearInterval(this._gameIntervalId);
+    clearInterval(this._dropableIntervalId);
     this._gameIntervalId = window.setInterval(() => this.loop(), 1000 / 60);
+    this._dropableIntervalId = window.setInterval(
+      () => this.spawnFruit(),
+      1000
+    );
   }
   updateScore(newScore: number) {
     const element = document.querySelector(".score") as HTMLElement;
@@ -39,13 +49,22 @@ export default class Game {
     this._score = newScore;
     element.innerText = "Score: " + this._score.toFixed(1);
   }
+  spawnFruit() {
+    console.log(this._dropables);
+    this._dropables.push(new Fruit(this._canvas, this._context));
+  }
   loop() {
     this._player.updateState();
+    this._dropables.forEach((dropable) => dropable.updateState(this));
     this.renderGame();
   }
   renderGame() {
     this.clearScreen();
     this._player.draw();
+    this._dropables.forEach((dropable) => dropable.draw());
+  }
+  deleteDropable(dropable: Dropable) {
+    this._dropables = this._dropables.filter((d) => d !== dropable);
   }
   clearScreen() {
     this._context.clearRect(0, 0, this._canvas.width, this._canvas.height);
