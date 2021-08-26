@@ -12,9 +12,10 @@ body {
 
 .ground {
   position: fixed;
-  bottom: 50px;
+  bottom: 25px;
+  margin: 0 9px;
   left: 0;
   height: 1px;
-  width: 100%;
+  width: calc(100% - 18px);
   background-color: #fff;
 }
