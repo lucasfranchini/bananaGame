@@ -24,13 +24,7 @@ export default class Fruit extends Drops implements Dropable {
       this.generateFruit("/assets/banana.png", 61, true, 15, 1);
     }
   }
-  generateFruit(
-    img: string,
-    width: number,
-    isBanana: boolean,
-    dropSpeed: number,
-    points: number
-  ) {
+  generateFruit(img: string, width: number, isBanana: boolean, dropSpeed: number, points: number) {
     this._img.src = img;
     this._img.width = width;
     this._isBanana = isBanana;
@@ -43,9 +37,6 @@ export default class Fruit extends Drops implements Dropable {
       game.deleteDropable(this);
       game.player.reduceLife(false);
       game.updateLife();
-    }
-    if (game.player.checkLife()) {
-      game.end();
     }
     if (game.player.checkCollision(this)) {
       this._isBanana

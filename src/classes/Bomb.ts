@@ -12,10 +12,9 @@ export default class Bomb extends Drops implements Dropable {
     if (this.isOutOfScreen()) {
       game.deleteDropable(this);
     }
-    if (game.player.checkCollision(this) || game.player.checkLife()) {
+    if (game.player.checkCollision(this)) {
       game.player.reduceLife(true);
       game.updateLife();
-      game.end();
     }
   }
 }

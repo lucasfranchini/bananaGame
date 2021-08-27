@@ -70,6 +70,9 @@ export default class Game {
   loop() {
     this._player.updateState();
     this._dropables.forEach((dropable) => dropable.updateState(this));
+    if (this.player.checkLife()) {
+      this.end();
+    }
     this.renderGame();
   }
   renderGame() {
@@ -80,7 +83,6 @@ export default class Game {
   increaseDificult() {
     if (this._difficult < 3) this._difficult += 0.5;
     clearInterval(this._fruitsIntervalId);
-    console.log(this._difficult);
     this._fruitsIntervalId = window.setInterval(() => this.spawnFruit(), 1000 / this._difficult);
   }
   deleteDropable(dropable: Dropable) {
