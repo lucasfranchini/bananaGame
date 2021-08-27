@@ -10,13 +10,11 @@ export default class Game {
   private _gameIntervalId: number;
   private _fruitsIntervalId: number;
   private _bombsIntervalId: number;
+  private _difficultIntervalId: number;
+  private _difficult: number;
   score: number;
   private _dropables: Dropable[];
-  constructor(
-    screenWidth: number,
-    screenHeight: number,
-    canvas: HTMLCanvasElement
-  ) {
+  constructor(screenWidth: number, screenHeight: number, canvas: HTMLCanvasElement) {
     this._canvas = canvas;
     this._canvas.width = screenWidth;
     this._canvas.height = screenHeight;
@@ -31,6 +29,7 @@ export default class Game {
       4
     );
     this._dropables = [];
+    this._difficult = 1;
     this.scoreInHeader();
     this.updateScore(0);
     this.updateLife();
@@ -38,6 +37,7 @@ export default class Game {
     this._gameIntervalId = window.setInterval(() => this.loop(), 1000 / 60);
     this._fruitsIntervalId = window.setInterval(() => this.spawnFruit(), 1000);
     this._bombsIntervalId = window.setInterval(() => this.spawnBomb(), 2000);
+    this._difficultIntervalId = window.setInterval(() => this.increaseDificult(), 5000);
   }
   updateScore(newScore: number) {
     const element = document.querySelector(".score") as HTMLElement;
@@ -77,6 +77,12 @@ export default class Game {
     this._player.draw();
     this._dropables.forEach((dropable) => dropable.draw());
   }
+  increaseDificult() {
+    if (this._difficult < 3) this._difficult += 0.5;
+    clearInterval(this._fruitsIntervalId);
+    console.log(this._difficult);
+    this._fruitsIntervalId = window.setInterval(() => this.spawnFruit(), 1000 / this._difficult);
+  }
   deleteDropable(dropable: Dropable) {
     this._dropables = this._dropables.filter((d) => d !== dropable);
   }
@@ -110,6 +116,7 @@ export default class Game {
     clearInterval(this._gameIntervalId);
     clearInterval(this._fruitsIntervalId);
     clearInterval(this._bombsIntervalId);
+    clearInterval(this._difficultIntervalId);
   }
   get player() {
     return this._player;
