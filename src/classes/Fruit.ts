@@ -1,15 +1,14 @@
 import Dropable from "../interfaces/Dropables";
-import Entity from "./Entity";
+import Drops from "./Drops";
 import Game from "./Game";
-
-export default class Fruit extends Entity implements Dropable {
+1;
+export default class Fruit extends Drops implements Dropable {
   private _isBanana: boolean;
   private _points: number;
   constructor(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D) {
-    super(canvas, context, 0, 0, "/assets/orange.png", 65, 67);
+    super(canvas, context, "/assets/orange.png");
     this._isBanana = false;
     this.chooseRandomFruit();
-    this._x = this.generateRandomXPosition();
   }
   chooseRandomFruit() {
     const chance = Math.random();
@@ -38,14 +37,11 @@ export default class Fruit extends Entity implements Dropable {
     this._speedY = dropSpeed;
     this._points = points;
   }
-  generateRandomXPosition() {
-    return Math.floor(Math.random() * (this._canvas.width - this._img.width));
-  }
   updateState(game: Game) {
     this.move();
     if (this.isOutOfScreen()) {
       game.deleteDropable(this);
-      game.player.reduceLife();
+      game.player.reduceLife(false);
       game.updateLife();
     }
     if (game.player.checkLife()) {
@@ -57,8 +53,5 @@ export default class Fruit extends Entity implements Dropable {
         : game.updateScore(game.score + this._points);
       game.deleteDropable(this);
     }
-  }
-  isOutOfScreen() {
-    return this._y > this._canvas.height;
   }
 }
