@@ -90,4 +90,16 @@ export default class Player extends Entity {
       entityCoordinates.y[1] > playerCoordinates.y[0]
     );
   }
+  reduceLife() {
+    this._actualLife--;
+  }
+  checkLife() {
+    return this.actualLife === 0;
+  }
+  get maxLife() {
+    return this._maxLife;
+  }
+  get actualLife() {
+    return this._actualLife;
+  }
 }

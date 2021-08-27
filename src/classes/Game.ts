@@ -30,6 +30,7 @@ export default class Game {
     );
     this._dropables = [];
     this.updateScore(0);
+    this.updateLife();
     clearInterval(this._gameIntervalId);
     clearInterval(this._dropableIntervalId);
     this._gameIntervalId = window.setInterval(() => this.loop(), 1000 / 60);
@@ -48,6 +49,18 @@ export default class Game {
 
     this.score = newScore;
     element.innerText = "Score: " + this.score;
+  }
+  updateLife() {
+    const element = document.querySelector(".lifes") as HTMLElement;
+    element.innerHTML = "";
+
+    for (let i = 0; i < this.player.maxLife; i++) {
+      const life = new Image(40, 40);
+      console.log(this.player.actualLife);
+      if (i >= this.player.actualLife) life.src = "/assets/heart-empty.png";
+      else life.src = "/assets/heart.png";
+      element.appendChild(life);
+    }
   }
   spawnFruit() {
     this._dropables.push(new Fruit(this._canvas, this._context));
@@ -73,6 +86,11 @@ export default class Game {
   }
   onKeyUp(event: KeyboardEvent) {
     this._player.endMove(event);
+  }
+  end() {
+    this._dropables = [];
+    clearInterval(this._gameIntervalId);
+    clearInterval(this._dropableIntervalId);
   }
   get player() {
     return this._player;
