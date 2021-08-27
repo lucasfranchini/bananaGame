@@ -1,3 +1,4 @@
+import Coordinates from "../interfaces/Coordinates";
 import Entity from "./Entity";
 
 export default class Player extends Entity {
@@ -45,24 +46,48 @@ export default class Player extends Entity {
     }
   }
   checkCollision(entity: Entity) {
-    const playerCoordinates = {
+    const playerCoordinates: Coordinates = {
       y: [this._y, this._y + this._img.height],
       x: [this._x, this._x + this._img.width],
     };
-    const entityCoordinates = {
+    const entityCoordinates: Coordinates = {
       y: [entity.y, entity.y + entity.img.height],
       x: [entity.x, entity.x + entity.img.width],
     };
     return (
-      (entityCoordinates.x[1] > playerCoordinates.x[0] &&
-        entityCoordinates.x[1] < playerCoordinates.x[1] &&
-        entityCoordinates.y[1] > playerCoordinates.y[0]) ||
-      (entityCoordinates.x[0] > playerCoordinates.x[0] &&
-        entityCoordinates.x[0] < playerCoordinates.x[1] &&
-        entityCoordinates.y[1] > playerCoordinates.y[0]) ||
-      (entityCoordinates.x[0] < playerCoordinates.x[0] &&
-        entityCoordinates.x[1] > playerCoordinates.x[1] &&
-        entityCoordinates.y[1] > playerCoordinates.y[0])
+      this.collisionOnLeft(playerCoordinates, entityCoordinates) ||
+      this.collisionOnRight(playerCoordinates, entityCoordinates) ||
+      this.collisionOnCenter(playerCoordinates, entityCoordinates)
+    );
+  }
+  collisionOnRight(
+    playerCoordinates: Coordinates,
+    entityCoordinates: Coordinates
+  ) {
+    return (
+      entityCoordinates.x[0] > playerCoordinates.x[0] &&
+      entityCoordinates.x[0] < playerCoordinates.x[1] &&
+      entityCoordinates.y[1] > playerCoordinates.y[0]
+    );
+  }
+  collisionOnLeft(
+    playerCoordinates: Coordinates,
+    entityCoordinates: Coordinates
+  ) {
+    return (
+      entityCoordinates.x[1] > playerCoordinates.x[0] &&
+      entityCoordinates.x[1] < playerCoordinates.x[1] &&
+      entityCoordinates.y[1] > playerCoordinates.y[0]
+    );
+  }
+  collisionOnCenter(
+    playerCoordinates: Coordinates,
+    entityCoordinates: Coordinates
+  ) {
+    return (
+      entityCoordinates.x[0] < playerCoordinates.x[0] &&
+      entityCoordinates.x[1] > playerCoordinates.x[1] &&
+      entityCoordinates.y[1] > playerCoordinates.y[0]
     );
   }
 }
