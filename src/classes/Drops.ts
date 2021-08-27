@@ -17,6 +17,6 @@ export default abstract class Drops extends Entity implements Dropable {
     return Math.floor(Math.random() * (this._canvas.width - this._img.width));
   }
   isOutOfScreen() {
-    return this._y > this._canvas.height;
+    return this._y > this._canvas.height - 25;
   }
 }
