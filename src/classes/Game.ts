@@ -55,7 +55,6 @@ export default class Game {
 
     for (let i = 0; i < this.player.maxLife; i++) {
       const life = new Image(40, 40);
-      console.log(this.player.actualLife);
       if (i >= this.player.actualLife) life.src = "/assets/heart-empty.png";
       else life.src = "/assets/heart.png";
       element.appendChild(life);
@@ -84,6 +83,7 @@ export default class Game {
     this._context.clearRect(0, 0, this._canvas.width, this._canvas.height);
   }
   onKeyDown(event: KeyboardEvent) {
+    if (event.key === "Enter") return this.start();
     this._player.startMove(event);
   }
   onKeyUp(event: KeyboardEvent) {

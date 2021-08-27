@@ -3,11 +3,14 @@ body {
 }
 .header {
   position: fixed;
+  display: flex;
+  justify-content: space-between;
   top: 0;
   left: 0;
   height: 65px;
   width: 100%;
   background-color: #000;
+  text-align: center;
 }
 .ground {
   position: fixed;
@@ -18,14 +21,23 @@ body {
   width: calc(100% - 18px);
   background-color: #fff;
 }
+.lifes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.lifes img {
+  margin-left: 5px;
+}
 .score {
-  position: fixed;
-  top: 30px;
-  right: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 1.5em;
   font-family: Verdana;
   transition: all 0.7s ease-in;
   color: #fff;
+  margin-right: 5px;
 }
 
 .score.highlight {
