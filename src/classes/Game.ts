@@ -8,7 +8,7 @@ export default class Game {
   private _player: Player;
   private _gameIntervalId: number;
   private _dropableIntervalId: number;
-  private _score: number;
+  score: number;
   private _dropables: Dropable[];
   constructor(
     screenWidth: number,
@@ -41,13 +41,13 @@ export default class Game {
   updateScore(newScore: number) {
     const element = document.querySelector(".score") as HTMLElement;
 
-    if (newScore - this._score > 0) {
+    if (newScore - this.score > 0) {
       element.classList.add("highlight");
       setTimeout(() => element.classList.remove("highlight"), 100);
     }
 
-    this._score = newScore;
-    element.innerText = "Score: " + this._score.toFixed(1);
+    this.score = newScore;
+    element.innerText = "Score: " + this.score;
   }
   spawnFruit() {
     this._dropables.push(new Fruit(this._canvas, this._context));
