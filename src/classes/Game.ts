@@ -37,7 +37,7 @@ export default class Game {
     this._gameIntervalId = window.setInterval(() => this.loop(), 1000 / 60);
     this._fruitsIntervalId = window.setInterval(() => this.spawnFruit(), 1000);
     this._bombsIntervalId = window.setInterval(() => this.spawnBomb(), 2000);
-    this._difficultIntervalId = window.setInterval(() => this.increaseDificult(), 5000);
+    this._difficultIntervalId = window.setInterval(() => this.increaseDificult(), 8000);
   }
   updateScore(newScore: number) {
     const element = document.querySelector(".score") as HTMLElement;
@@ -81,7 +81,7 @@ export default class Game {
     this._dropables.forEach((dropable) => dropable.draw());
   }
   increaseDificult() {
-    if (this._difficult < 3) this._difficult += 0.5;
+    if (this._difficult < 2) this._difficult += 0.2;
     clearInterval(this._fruitsIntervalId);
     this._fruitsIntervalId = window.setInterval(() => this.spawnFruit(), 1000 / this._difficult);
   }
