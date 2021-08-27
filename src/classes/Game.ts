@@ -31,6 +31,7 @@ export default class Game {
       4
     );
     this._dropables = [];
+    this.scoreInHeader();
     this.updateScore(0);
     this.updateLife();
     this.clearIntervals();
@@ -92,6 +93,18 @@ export default class Game {
   end() {
     this._dropables = [];
     this.clearIntervals();
+    this.scoreCentered();
+  }
+  scoreCentered() {
+    const element = document.querySelector(".score") as HTMLElement;
+    element.classList.add("End");
+    const finishText = document.createElement("span");
+    finishText.innerText = "Press Enter to restart";
+    element.appendChild(finishText);
+  }
+  scoreInHeader() {
+    const element = document.querySelector(".score") as HTMLElement;
+    element.classList.remove("End");
   }
   clearIntervals() {
     clearInterval(this._gameIntervalId);
