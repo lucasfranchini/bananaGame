@@ -46,6 +46,9 @@ export default class Fruit extends Entity implements Dropable {
     if (this.isOutOfScreen()) {
       game.deleteDropable(this);
     }
+    if (game.player.checkCollision(this)) {
+      game.deleteDropable(this);
+    }
   }
   isOutOfScreen() {
     return this._y > this._canvas.height;

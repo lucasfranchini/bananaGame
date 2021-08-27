@@ -50,7 +50,6 @@ export default class Game {
     element.innerText = "Score: " + this._score.toFixed(1);
   }
   spawnFruit() {
-    console.log(this._dropables);
     this._dropables.push(new Fruit(this._canvas, this._context));
   }
   loop() {
@@ -74,5 +73,8 @@ export default class Game {
   }
   onKeyUp(event: KeyboardEvent) {
     this._player.endMove(event);
+  }
+  get player() {
+    return this._player;
   }
 }

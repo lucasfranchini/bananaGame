@@ -44,7 +44,7 @@ export default class Player extends Entity {
       this._x = this._canvas.width - this._img.width;
     }
   }
-  checkColision(entity: Entity) {
+  checkCollision(entity: Entity) {
     const playerCoordinates = {
       y: [this._y, this._y + this._img.height],
       x: [this._x, this._x + this._img.width],
@@ -53,5 +53,16 @@ export default class Player extends Entity {
       y: [entity.y, entity.y + entity.img.height],
       x: [entity.x, entity.x + entity.img.width],
     };
+    return (
+      (entityCoordinates.x[1] > playerCoordinates.x[0] &&
+        entityCoordinates.x[1] < playerCoordinates.x[1] &&
+        entityCoordinates.y[1] > playerCoordinates.y[0]) ||
+      (entityCoordinates.x[0] > playerCoordinates.x[0] &&
+        entityCoordinates.x[0] < playerCoordinates.x[1] &&
+        entityCoordinates.y[1] > playerCoordinates.y[0]) ||
+      (entityCoordinates.x[0] < playerCoordinates.x[0] &&
+        entityCoordinates.x[1] > playerCoordinates.x[1] &&
+        entityCoordinates.y[1] > playerCoordinates.y[0])
+    );
   }
 }
